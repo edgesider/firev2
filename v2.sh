@@ -8,6 +8,8 @@ DEBUG=${DEBUG-0}
 CONFIG_DIR="$BASE_DIR/nodes" # should be absolute
 LINK_TARGET="$BASE_DIR/nodes/using.json"
 
+SYSTEMD_SERVICE="firev2.service"
+
 errecho() {
     echo "$@" >&2
 }
@@ -64,7 +66,7 @@ case "$1" in
 
         checknode $2
         createlink $2
-        systemctl restart myv2ray
+        systemctl restart "$SYSTEMD_SERVICE"
         ;;
     stop)
         if test $# -gt 1
@@ -72,7 +74,7 @@ case "$1" in
             usage $@
         fi
 
-        systemctl stop myv2ray
+        systemctl stop "$SYSTEMD_SERVICE"
         ;;
     restart)
         if test $# -gt 1
@@ -80,7 +82,7 @@ case "$1" in
             usage $@
         fi
 
-        systemctl restart myv2ray
+        systemctl restart "$SYSTEMD_SERVICE"
         ;;
     stat|status)
         if test $# -gt 1
@@ -89,8 +91,8 @@ case "$1" in
         fi
 
         linkinfo
-        echo '---systemctl status myv2ray---'
-        systemctl status myv2ray
+        echo ---systemctl status "$SYSTEMD_SERVICE"---
+        systemctl status "$SYSTEMD_SERVICE"
         ;;
     ls|list)
         ls $CONFIG_DIR | grep .json | sed -e 's/.json//'
