@@ -1,6 +1,6 @@
 #! /bin/sh
 
-set -e
+#set -e
 
 BASE_DIR="$PWD/`dirname $0`"
 
@@ -32,11 +32,6 @@ checknode() {
 createlink() {
     # $1: node name
     linksrc=$CONFIG_DIR/$1.json
-    if ! test -L $LINK_TARGET
-    then
-        errecho "$LINK_TARGET not existed or not a symbiolic link"
-        exit -1
-    fi
     rm $LINK_TARGET
     ln -s $linksrc $LINK_TARGET
 }
