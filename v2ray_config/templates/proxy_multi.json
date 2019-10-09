@@ -1,0 +1,116 @@
+{
+    "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "warn"
+    },
+    "inbounds": [
+        {
+            "tag": "auto",
+            "port": 1079,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "settings": {
+                "auth": "noauth",
+                "udp": false,
+                "ip": "127.0.0.1",
+                "userLevel": 0
+            }
+        },
+        {
+            "tag": "proxy",
+            "port": 1080,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "settings": {
+                "auth": "noauth",
+                "udp": false,
+                "ip": "127.0.0.1",
+                "userLevel": 0
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "blocked",
+            "protocol": "blackhole",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules":[
+            {
+                "type": "field",
+                "inboundTag": "proxy",
+                "outboundTag": "proxy"
+            },
+
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:geolocation-!cn",
+                    "github.com",
+                    "githun.io",
+                    "u9un.com",
+                    "docker.com",
+                    "docker.io"
+                ],
+                "inboundTag": "auto",
+                "outboundTag": "proxy"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn"
+                ],
+                "inboundTag": "auto",
+                "outboundTag": "direct"
+            },
+            {
+                "type": "field",
+                "inboundTag": "auto",
+                "outboundTag": "direct"
+            }
+        ]
+    },
+
+    "dns": {
+        "hosts": {
+            "domain:v2ray.com": "www.vicemc.net",
+            "domain:github.io": "pages.github.com",
+            "domain:wikipedia.org": "www.wikimedia.org",
+            "domain:shadowsocks.org": "electronicsrealm.com"
+        },
+        "servers": [
+            "1.1.1.1",
+            {
+                "address": "114.114.114.114",
+                "port": 53,
+                "domains": [
+                    "geosite:cn"
+                ]
+            },
+            "8.8.8.8",
+            "localhost"
+        ]
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "uplinkOnly": 0,
+                "downlinkOnly": 0
+            }
+        },
+        "system": {
+            "statsInboundUplink": false,
+            "statsInboundDownlink": false
+        }
+    },
+    "other": {}
+}
