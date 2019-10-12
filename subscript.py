@@ -40,6 +40,7 @@ if __name__ == '__main__':
     if intype == 'vmess_str':
         pass
     elif intype == 'vmess_url':
+        os.makedirs(node_dir, exist_ok=True)
         with open(os.path.join(template_dir, 'proxy_multi.json')) as f:
             c = json.load(f)
         conf = objs.ConfigObject.from_object(c)

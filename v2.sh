@@ -18,7 +18,7 @@ usage() {
     errecho "command:"
     errecho "    $0 start [NODE]"
     errecho "    $0 restart|stop|status(stat)|list(ls)|test"
-    exit -1
+    exit 1
 }
 
 checknode() {
@@ -27,7 +27,7 @@ checknode() {
     if ! test -f "$CONFIG"
     then
         errecho "node [$1] not exists"
-        exit -1
+        exit 1
     fi
 }
 
@@ -42,12 +42,12 @@ linkinfo() {
     if ! test -e $LINK_TARGET
     then
         errecho "$LINK_TARGET not existed"
-        exit -1
+        exit 1
     fi
     if ! test -L $LINK_TARGET
     then
         errecho "$LINK_TARGET existed but not a symbiolic link"
-        exit -1
+        exit 1
     fi
     echo 'current: '`readlink $LINK_TARGET`
 }
