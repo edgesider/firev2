@@ -2,11 +2,11 @@
 
 #set -e
 
-BASE_DIR="$PWD/`dirname $0`"
-
 DEBUG=${DEBUG-0}
-CONFIG_DIR="$BASE_DIR/nodes" # should be absolute
-LINK_TARGET="$BASE_DIR/nodes/using.json"
+
+BASE_DIR="$HOME/.config/firev2"
+NODE_DIR="$BASE_DIR/nodes"
+LINK_TARGET="$BASE_DIR/using.json"
 
 SYSTEMD_SERVICE="firev2.service"
 
@@ -22,9 +22,9 @@ usage() {
 }
 
 checknode() {
-    CONFIG=$CONFIG_DIR/$1.json
-    test "$DEBUG" != "0" && echo $CONFIG
-    if ! test -f $CONFIG
+    CONFIG="$NODE_DIR/$1.json"
+    test "$DEBUG" != "0" && echo "$CONFIG"
+    if ! test -f "$CONFIG"
     then
         errecho "node [$1] not exists"
         exit -1
@@ -33,7 +33,7 @@ checknode() {
 
 createlink() {
     # $1: node name
-    linksrc=$CONFIG_DIR/$1.json
+    linksrc=$NODE_DIR/$1.json
     rm $LINK_TARGET
     ln -s $linksrc $LINK_TARGET
 }
@@ -95,7 +95,7 @@ case "$1" in
         systemctl status "$SYSTEMD_SERVICE"
         ;;
     ls|list)
-        ls $CONFIG_DIR | grep .json | sed -e 's/.json//'
+        ls $NODE_DIR | grep .json | sed -e 's/.json//'
         ;;
     test)
         linkinfo

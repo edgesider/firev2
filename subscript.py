@@ -1,4 +1,4 @@
-#! /bin/env python3
+#! /usr/bin/env python3
 from v2ray_config import objects as objs
 import sys
 import os
@@ -6,7 +6,11 @@ import json
 from getopt import gnu_getopt as getopt
 from getopt import GetoptError
 
-usage_str = f"""{sys.argv[0]} [type] [input] [output]
+base_dir = os.path.join(os.environ['HOME'], '.config', 'firev2')
+node_dir = os.path.join(base_dir, 'nodes')
+template_dir = os.path.join(base_dir, 'templates')
+
+usage_str = f"""{sys.argv[0]} TYPE INPUT [OUTPUT]
 
     supported types | input meaning
     -------------------------------
@@ -22,10 +26,12 @@ def parse():
     argv = sys.argv[1:]
     if '--help' in sys.argv:
         usage()
-    if len(argv) != 3:
-        usage()
-
-    return argv
+    if len(argv) == 3:
+        return argv
+    if len(argv) == 2:
+        argv.append(node_dir)
+        return argv
+    usage()
 
 
 if __name__ == '__main__':
@@ -34,7 +40,7 @@ if __name__ == '__main__':
     if intype == 'vmess_str':
         pass
     elif intype == 'vmess_url':
-        with open('templates/proxy_multi.json') as f:
+        with open(os.path.join(template_dir, 'proxy_multi.json')) as f:
             c = json.load(f)
         conf = objs.ConfigObject.from_object(c)
         nodes = objs.outbound.OutboundObject.create(
