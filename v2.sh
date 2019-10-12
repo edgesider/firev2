@@ -26,7 +26,7 @@ checknode() {
     test "$DEBUG" != "0" && echo "$CONFIG"
     if ! test -f "$CONFIG"
     then
-        errecho "node [$1] not exists"
+        errecho "node ["$1"] not exists"
         exit 1
     fi
 }
@@ -34,22 +34,22 @@ checknode() {
 createlink() {
     # $1: node name
     linksrc=$NODE_DIR/$1.json
-    rm $LINK_TARGET
-    ln -s $linksrc $LINK_TARGET
+    rm "$LINK_TARGET"
+    ln -s "$linksrc" "$LINK_TARGET"
 }
 
 linkinfo() {
-    if ! test -e $LINK_TARGET
+    if ! test -e "$LINK_TARGET"
     then
         errecho "$LINK_TARGET not existed"
         exit 1
     fi
-    if ! test -L $LINK_TARGET
+    if ! test -L "$LINK_TARGET"
     then
         errecho "$LINK_TARGET existed but not a symbiolic link"
         exit 1
     fi
-    echo 'current: '`readlink $LINK_TARGET`
+    echo 'current: '`readlink "$LINK_TARGET"`
 }
 
 if test $# -lt 1
@@ -64,8 +64,8 @@ case "$1" in
             usage $@
         fi
 
-        checknode $2
-        createlink $2
+        checknode "$2"
+        createlink "$2"
         systemctl restart "$SYSTEMD_SERVICE"
         ;;
     stop)
@@ -95,7 +95,7 @@ case "$1" in
         systemctl status "$SYSTEMD_SERVICE"
         ;;
     ls|list)
-        ls $NODE_DIR | grep .json | sed -e 's/.json//'
+        ls "$NODE_DIR" | grep .json | sed -e 's/.json//'
         ;;
     test)
         linkinfo
