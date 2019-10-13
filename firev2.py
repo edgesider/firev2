@@ -6,37 +6,6 @@ import config
 import subscript
 import node_mgr
 
-help_str = """{0} COMMAND [ARGS]
-options:
-    --config
-
-commands:
-    subscript
-    start
-    stop
-    restart
-    list
-    status
-
-    {0} subscript TYPE URL
-
-        supported types | url meaning
-        -------------------------------
-        vmess_str       | vmess://...
-        vmess_url       | http(s) subscription url
-
-    options:
-        --help
-        --template
-
-    {0} start NODE
-    options:
-        -i, --interactive
-
-    {0} stop
-    {0} restart
-    {0} list
-    {0} status""".format(sys.argv[0])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(sys.argv[0])

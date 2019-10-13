@@ -1,6 +1,8 @@
 __pycache__
-sub_srv.py
 venv
+
 nodes/*
-systemd/firev2.service
 firev2.conf
+systemd/firev2.service
+
+usage.txt

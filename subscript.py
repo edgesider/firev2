@@ -7,9 +7,6 @@ import json
 import config
 
 
-# TODO record subscription meta info
-
-
 def process(type, url, template):
     node_dir = config.node_dir
     template_dir = config.template_dir
