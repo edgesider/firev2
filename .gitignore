@@ -3,3 +3,4 @@ sub_srv.py
 venv
 nodes/*
 systemd/firev2.service
+firev2.conf
