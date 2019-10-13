@@ -7,3 +7,4 @@ A command tool for managing v2ray nodes.
 - subscription record
 - subscription update
 - templates operate
+- colorful interactive ui

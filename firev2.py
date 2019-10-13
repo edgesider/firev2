@@ -27,7 +27,11 @@ if __name__ == '__main__':
     sub_start = subparsers.add_parser(
             'start', help='start a node')
     sub_start.add_argument(
-            'node', help='node name')
+            '-i', '--interactive',
+            action='store_true',
+            help='select node interactively')
+    sub_start.add_argument(
+            'node', nargs='?', help='node name')
 
     sub_stop = subparsers.add_parser(
             'stop', help='stop using node')
@@ -48,7 +52,7 @@ if __name__ == '__main__':
     if command == 'subscript':
         subscript.process(args.type, args.url, args.template)
     elif command == 'start':
-        node_mgr.process_start(args.node)
+        node_mgr.process_start(args.node, args.interactive)
     elif command == 'stop':
         node_mgr.process_stop()
     elif command == 'restart':

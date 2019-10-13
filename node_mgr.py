@@ -4,6 +4,14 @@ import subprocess
 import config
 
 
+def select_node():
+    nodes = get_nodes()
+    promot = '\n'.join(['[{}] {}'.format(i, node) for i, node in enumerate(nodes)])
+    print(promot)
+    select = int(input('select one node: '))
+    return nodes[select]
+
+
 def get_nodes():
     files = os.listdir(config.node_dir)
     return [f.replace('.json', '') for f in files if f.endswith('.json')]
@@ -54,7 +62,11 @@ def systemd_status():
     p.communicate()
 
 
-def process_start(node):
+def process_start(node, interactive):
+    if interactive:
+        node = select_node()
+    elif node is None:
+        raise Exception('neither -i option nor node specified')
     check_node(node)
     create_link(node)
     systemd_restart()
