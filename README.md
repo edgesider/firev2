@@ -34,8 +34,7 @@ cp -r templates ~/.config/firev2/
 4. 创建systemd文件
 
 ```bash
-./systemd/gen.sh
-systemctl daemon-reload
+./gen_systemd.py
 ```
 
 5. 订阅节点
