@@ -28,7 +28,7 @@ cp firev2.example.conf ~/.config/firev2/firev2.conf
 3. 创建模板文件
 
 ```bash
-cp templates ~/.config/firev2/
+cp -r templates ~/.config/firev2/
 ```
 
 4. 创建systemd文件
@@ -38,7 +38,7 @@ cp templates ~/.config/firev2/
 systemctl daemon-reload
 ```
 
-5.. 订阅节点
+5. 订阅节点
 
 ```bash
 ./firev2.py subscript vmess_url URL
@@ -66,7 +66,7 @@ cat completions/firev2_completion.bash >> ~/.bashrc
 
 ```bash
 touch ~/.config/fish/fish.config
-cat completions/firev2_completion.fish >> ~/.config/fish/fish.config
+cat completions/firev2_completion.fish >> ~/.config/fish/config.fish
 ```
 
 # TODO
