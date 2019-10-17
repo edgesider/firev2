@@ -1,18 +1,8 @@
 from collections.abc import Iterable
 
-__all__ = [
-    'JsonCollection',
-    'JsonArray',
-    'JsonMap',
-    'JsonMapField',
-
-    'F_REQUIRED',
-    'F_NOTNULL',
-]
-
-'The field must exist.'
+# The field must exist.
 F_REQUIRED = 1
-'The field should not be null if it exists.'
+# The field should not be null if it exists.
 F_NOTNULL = 2
 
 
