@@ -58,14 +58,14 @@ cp -r templates ~/.config/firev2/
 
 ```bash
 touch ~/.bashrc
-cat completions/firev2_completion.bash >> ~/.bashrc
+echo source $PWD/completions/firev2_completion.bash >> ~/.bashrc
 ```
 
 - fish shell
 
 ```bash
 touch ~/.config/fish/fish.config
-cat completions/firev2_completion.fish >> ~/.config/fish/config.fish
+echo source $PWD/completions/firev2_completion.fish >> ~/.config/fish/fish.config
 ```
 
 # TODO
