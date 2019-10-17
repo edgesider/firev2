@@ -7,8 +7,23 @@ import config
 def select_node():
     nodes = get_nodes()
     promot = '\n'.join(['[{}] {}'.format(i, node) for i, node in enumerate(nodes)])
-    print(promot)
-    select = int(input('select one node: '))
+    subprocess.Popen( ['less', '-F', '-K'], stdin=subprocess.PIPE) \
+            .communicate(input=promot.encode('utf8'))
+    while True:
+        select = input('select one node (? to review nodes): ')
+        if select == '?':
+            subprocess.Popen( ['less', '-F', '-K'], stdin=subprocess.PIPE) \
+                    .communicate(input=promot.encode('utf8'))
+            continue
+        try:
+            select = int(select)
+        except ValueError:
+            print('please enter a valid number')
+            continue
+        if select < 0 or select >= len(nodes):
+            print('please enter a valid number')
+            continue
+        break
     return nodes[select]
 
 
