@@ -6,14 +6,14 @@ import config
 
 def select_node():
     nodes = get_nodes()
-    promot = '\n'.join(['[{}] {}'.format(i, node) for i, node in enumerate(nodes)])
+    prompt = '\n'.join(['[{}] {}'.format(i, node) for i, node in enumerate(nodes)])
     subprocess.Popen( ['less', '-F', '-K'], stdin=subprocess.PIPE) \
-            .communicate(input=promot.encode('utf8'))
+            .communicate(input=prompt.encode('utf8'))
     while True:
         select = input('select one node (? to review nodes): ')
         if select == '?':
             subprocess.Popen( ['less', '-F', '-K'], stdin=subprocess.PIPE) \
-                    .communicate(input=promot.encode('utf8'))
+                    .communicate(input=prompt.encode('utf8'))
             continue
         try:
             select = int(select)
