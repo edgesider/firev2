@@ -2,10 +2,6 @@
 import sys
 import argparse
 
-import config
-import subscript
-import node_mgr
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(sys.argv[0])
@@ -43,10 +39,16 @@ if __name__ == '__main__':
             'status', help='check current status')
 
     args = parser.parse_args(sys.argv[1:])
+
+    import config
+
     if args.config is not None:
         config.load_from_file(args.config)
     else:
         config.auto_load()
+
+    import subscript
+    import node_mgr
 
     command = args.command
     if command == 'subscript':
