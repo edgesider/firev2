@@ -44,11 +44,29 @@ class SockoptObject(j.JsonMap):
     ]
 
 
+class TransportHttpHeaderObject(j.JsonMap):
+    _fields = [
+        j.JsonMapField('type', str)
+    ]
+
+
+class TransportSettingsObject(j.JsonMap):
+    _fields = [
+        j.JsonMapField('header', TransportHttpHeaderObject)
+    ]
+
+
 class StreamSettingsObject(j.JsonMap):
     _fields = [
         j.JsonMapField('network', str),
         j.JsonMapField('security', str),
-        j.JsonMapField('sockopt', SockoptObject)
+        j.JsonMapField('sockopt', SockoptObject),
+        j.JsonMapField('wsSettings', TransportSettingsObject),
+        j.JsonMapField('tcpSettings', TransportSettingsObject),
+        j.JsonMapField('kcpSettings', TransportSettingsObject),
+        j.JsonMapField('httpSettings', TransportSettingsObject),
+        j.JsonMapField('dsSettings', TransportSettingsObject),
+        j.JsonMapField('quicSettings', TransportSettingsObject),
     ]
 
     @classmethod
@@ -61,8 +79,16 @@ class StreamSettingsObject(j.JsonMap):
         obj = cls.default()
         obj.network = conf['net']
         tls = conf.get('tls')
+        type = conf.get('type')
         if tls: # not empty string and not None
             obj.security = tls
+        if type:
+            print('type')
+            setattr(obj, obj.network + 'Settings', TransportSettingsObject.from_object({
+                'header': {
+                    'type': type
+                }
+            }))
         return obj
 
 
